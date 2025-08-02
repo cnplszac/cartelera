@@ -114,10 +114,8 @@
                 
                 if (segundos <= 0) {
                     clearInterval(intervalo);
-                    // Abre la página de Cinépolis en una nueva pestaña después de que el contador termine
-                    window.open('https://cinepolis.com.gt/cartelera/zacapa/cinepolis-pradera-zacapa', '_blank');
-                    // Oculta el mensaje después de la redirección
-                    mensaje.classList.add('hidden');
+                    // Redirige a la página de Cinépolis en la misma pestaña
+                    window.location.href = 'https://cinepolis.com.gt/cartelera/zacapa/cinepolis-pradera-zacapa';
                 }
             }, 1000);
         });
