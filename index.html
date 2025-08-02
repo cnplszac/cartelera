@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinépolis Pradera Zacapa</title>
+    <!-- Incluye Tailwind CSS para un diseño moderno y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define la fuente Inter para un estilo limpio y legible -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Animación de fondo para un efecto sutil */
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        /* Define la animación del degradado */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animación para el mensaje emergente */
+        @keyframes bounce-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .animate-bounce-in {
+            animation: bounce-in 0.5s ease-out;
+        }
+
+        /* Animación para el contador */
+        @keyframes pulse-blue {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+        }
+        .pulse-animation {
+            animation: pulse-blue 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-800 to-indigo-900 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Contenedor principal de la aplicación con efecto de vidrio esmerilado -->
+    <div class="bg-blue-950/50 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-2xl max-w-lg w-full text-center border border-white/40">
+        <!-- Título principal -->
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
+            ¡Bienvenido a Cinépolis Pradera Zacapa!
+        </h1>
+        <!-- Mensaje descriptivo -->
+        <p class="text-lg text-white mb-8">
+            Prepara tu visita de la forma más rápida y sencilla.
+        </p>
+        <!-- Botón para ver la cartelera con un icono -->
+        <button id="verCarteleraBtn" 
+                class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center justify-center mx-auto">
+            <!-- Icono de cine en línea -->
+            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 5-4V15z" />
+            </svg>
+            Ver Cartelera
+        </button>
+    </div>
+
+    <!-- Mensaje emergente (inicialmente oculto) -->
+    <div id="mensajeEmergente" 
+         class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
+        <div class="bg-gradient-to-br from-sky-400 to-cyan-500 text-white p-8 rounded-3xl shadow-2xl text-center max-w-sm w-full animate-bounce-in">
+            <h2 class="text-3xl font-bold mb-2">
+                ¡Ahorra tiempo en taquilla!
+            </h2>
+            <p class="text-lg mb-4">
+                Elige tu película y horario para que solo tengas que indicarlo al llegar.
+            </p>
+            <div class="flex items-center justify-center space-x-2">
+                <!-- Icono de reloj SVG -->
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-xl font-medium">
+                    Redirigiendo en <span id="contador" class="bg-white text-blue-600 rounded-full px-4 py-2 pulse-animation shadow-lg inline-block font-extrabold text-2xl">5</span>...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtiene el botón por su ID
+        const verCarteleraBtn = document.getElementById('verCarteleraBtn');
+        const mensaje = document.getElementById('mensajeEmergente');
+        const contadorElement = document.getElementById('contador');
+        
+        // Agrega un escuchador de eventos para el clic del botón
+        verCarteleraBtn.addEventListener('click', () => {
+            // Muestra el mensaje emergente
+            mensaje.classList.remove('hidden');
+
+            let segundos = 5;
+            contadorElement.textContent = segundos;
+            
+            // Inicia el contador
+            const intervalo = setInterval(() => {
+                segundos--;
+                contadorElement.textContent = segundos;
+                
+                if (segundos <= 0) {
+                    clearInterval(intervalo);
+                    // Abre la página de Cinépolis en una nueva pestaña después de que el contador termine
+                    window.open('https://cinepolis.com.gt/cartelera/zacapa/cinepolis-pradera-zacapa', '_blank');
+                    // Oculta el mensaje después de la redirección
+                    mensaje.classList.add('hidden');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
